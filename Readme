@@ -1,0 +1,57 @@
+"bestellungId":1,
+    "bestellungBeschreibung": "TEst1",
+    "bestellungPreis": 200,
+    "zeit":"2024-06-01T22:00:00Z"
+
+    warum in Postman klein erste Buchstape und in klasse groß definiert?
+
+    {
+        "einkaufsKorbId":  "124e4567-e89b-12d3-a456-426614174000",
+        "einkaufsKorbBeschreibung": "Berlin 1"
+    }
+
+    warum UUID soll groß und mit - sein?
+
+    Problem mit UUID , nicht alle Elemente zeigen?
+
+
+
+
+    => Ergebnis:
+    User
+        ->Korb
+            ->Bestellung
+                ->Type
+
+    <user userId="1">
+        <Adresse>einkaufsKorbBeschreibung 1</Adresse>
+        <Zeit>2002-11-11T01:00:00+01:00</Zeit>
+    </user>
+    <einkaufsKorb einkaufsKorbId="10000000-0000-0000-c000-000000000046">
+            <EinkaufsKorbBeschreibung>einkaufsKorbBeschreibung 1</EinkaufsKorbBeschreibung>
+        </einkaufsKorb>
+    <bestellung bestellungId="1">
+        <BestellungBeschreibung>BestellungBeschreibung 1</BestellungBeschreibung>
+        <BestellungPreis>123.0</BestellungPreis>
+        <Zeit>2002-11-11T01:00:00+01:00</Zeit>
+    </bestellung>
+    <type typeId="11000000-0000-0000-c000-000000000046">
+        <TypeBeschreibung>TypeBeschreibung 1</TypeBeschreibung>
+    </type>
+
+
+    <user userId="1">
+        <Adresse>einkaufsKorbBeschreibung 1</Adresse>
+        <Zeit>2002-11-11T01:00:00+01:00</Zeit>
+        <einkaufsKorb einkaufsKorbId="10000000-0000-0000-c000-000000000046">
+            <EinkaufsKorbBeschreibung>einkaufsKorbBeschreibung 1</EinkaufsKorbBeschreibung>
+            <bestellungen bestellungId="1">
+                <BestellungBeschreibung>BestellungBeschreibung 1</BestellungBeschreibung>
+                <BestellungPreis>123.0</BestellungPreis>
+                <Zeit>2002-11-11T01:00:00+01:00</Zeit>
+                <types typeId="11000000-0000-0000-c000-000000000046">
+                    <TypeBeschreibung>TypeBeschreibung 1</TypeBeschreibung>
+                </types>
+            </bestellungen>
+        </einkaufsKorb>
+    </user>
