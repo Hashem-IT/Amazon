@@ -1,3 +1,4 @@
+Frage:
 "bestellungId":1,
     "bestellungBeschreibung": "TEst1",
     "bestellungPreis": 200,
@@ -15,7 +16,7 @@
     Problem mit UUID , nicht alle Elemente zeigen?
 
 
-
+----------------------------------------------------------
 
     => Ergebnis:
     User

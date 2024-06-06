@@ -1,7 +1,9 @@
 
 package service;
 
+import entity.Bestellung;
 import entity.Type;
+import entity.User;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import java.util.Collection;
@@ -54,10 +56,43 @@ public class TypeService {
 
         Type type = TypeDb.remove(TypeId);
 
-        if(TypeDb.get(TypeId) == null)
+        if(type == null)
             throw new IllegalStateException("User gelöscht");
         return type;
     }
 
+    // gib mir type nummer 1 in bestellung 1
+    // http://localhost:8000/restapi/types/21000000-0000-0000-c000-000000000046/Bestellung/1
+    @GET
+    @Path("{TypeId}/Bestellung/{BestellungId}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Type getTypefromBestellungId(@PathParam("TypeId") UUID typeId, @PathParam("BestellungId") int bestellungId) {
+        Bestellung bestellung = BestellungService.BestellungDb.get(bestellungId);
 
-}
+        if (bestellung == null) {
+            throw new IllegalStateException("No Bestellung found with this ID");
+        }
+
+        for (Type type : bestellung.getTypes()) {
+            if (type.getTypeId().equals(typeId)) {
+                return type;
+            }
+        }
+
+        throw new IllegalStateException("No TypeId found with this ID in the specified Bestellung");
+
+        }
+    // gib mir alle type in bestellung 1
+    // http://localhost:8000/restapi/types/1/types
+    @GET
+    @Path("{BestellungId}/types")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Collection<Type> getTypesByBestellungId(@PathParam("BestellungId") int bestellungId) {
+        Bestellung bestellung = BestellungService.BestellungDb.get(bestellungId);
+        if (bestellung == null) {
+            throw new IllegalStateException("No Bestellung found with this ID");
+        }
+
+        return bestellung.getTypes();
+    }
+    }

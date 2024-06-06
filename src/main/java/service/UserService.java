@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -107,11 +108,50 @@ public class UserService {
             throw new IllegalStateException("User oder EinkaufsKorb nicht gefunden");
         }
 
-        user.setEinkaufsKorb(einkaufsKorb);
+
+        Collection<EinkaufsKorb> einkaufsKorben = user.getEinkaufsKorb();
+        if (einkaufsKorben == null) {
+            einkaufsKorben = new ArrayList<>();
+            user.setEinkaufsKorb(einkaufsKorben);
+        }
+
+        einkaufsKorben.add(einkaufsKorb);
         userDb.put(userId, user);
 
         System.out.println("EinkaufsKorb added to user: " + user);
 
         return user;
+    }
+
+    // gib mir alle einkaufskoerbe in UserId 1
+    //http://localhost:8000/restapi/users/1/einkaufskoerbe
+    @GET
+    @Path("{UserId}/einkaufskoerbe")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Collection<EinkaufsKorb> getEinkaufskoerbeByUserId(@PathParam("UserId") int userId) {
+        User user = userDb.get(userId);
+        if (user == null) {
+            throw new IllegalStateException("No User found with this ID");
+        }
+        return user.getEinkaufsKorb();
+    }
+
+    // gib mir  UserId 1 in EinkaufsKorbId 1
+    @GET
+    @Path("{UserId}/einkaufskorb/{EinkaufsKorbId}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public EinkaufsKorb getEinkaufsKorbByUserIdAndEinkaufsKorbId(@PathParam("UserId") int userId, @PathParam("EinkaufsKorbId") UUID einkaufsKorbId) {
+        User user = userDb.get(userId);
+        if (user == null) {
+            throw new IllegalStateException("No User found with this ID");
+        }
+
+        for (EinkaufsKorb einkaufsKorb : user.getEinkaufsKorb()) {
+            if (einkaufsKorb.getEinkaufsKorbId().equals(einkaufsKorbId)) {
+                return einkaufsKorb;
+            }
+        }
+
+        throw new IllegalStateException("No EinkaufsKorb found with this ID in the specified User");
     }
 }

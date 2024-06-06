@@ -15,7 +15,7 @@ public class User {
 
     private Collection<Bestellung> bestellungen;
     private Collection<Type> types ;
-    private EinkaufsKorb einkaufsKorb;
+    private Collection<EinkaufsKorb> einkaufsKorb;
 
     public User() { }
 
@@ -59,11 +59,11 @@ public class User {
         this.types = types;
     }
 
-    public EinkaufsKorb getEinkaufsKorb() {
+    public Collection<EinkaufsKorb> getEinkaufsKorb() {
         return einkaufsKorb;
     }
 
-    public void setEinkaufsKorb(EinkaufsKorb einkaufsKorb) {
+    public void setEinkaufsKorb(Collection<EinkaufsKorb> einkaufsKorb) {
         this.einkaufsKorb = einkaufsKorb;
     }
 
